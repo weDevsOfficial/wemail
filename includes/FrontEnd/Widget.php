@@ -36,14 +36,14 @@ class Widget extends WP_Widget {
     public function widget( $args, $instance ) {
         $title = ! empty( $instance['title'] ) ? $instance['title'] : '';
 
-        echo $args['before_widget'];
+        echo esc_html( $args['before_widget'] );
 
         if ( $title ) {
-            echo $args['before_title'] . $title . $args['after_title'];
+            echo esc_html( $args['before_title'] . $title . $args['after_title'] );
         }
 
         if ( empty( $instance['form'] ) ) {
-            return __( 'Form Id is missing', 'wemail' );
+            return esc_html__( 'Form Id is missing', 'wemail' );
         }
 
         $id = $instance['form'];
@@ -63,7 +63,7 @@ class Widget extends WP_Widget {
 
         include WEMAIL_VIEWS . '/form.php';
 
-        echo $args['after_widget'];
+        echo esc_html( $args['after_widget'] );
     }
 
 }

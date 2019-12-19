@@ -41,7 +41,7 @@ class FrontEnd {
             $forms = $this->get_filtered_forms( $forms, $current_page_id );
 
             foreach ( $forms as $form ) {
-                echo wemail_form( $form['id'] );
+                echo esc_html( wemail_form( $form['id'] ) );
             }
         }
     }

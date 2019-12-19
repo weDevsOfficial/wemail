@@ -61,7 +61,7 @@ class FormOptIn
         ?>
         <p class="wemail-form-opt-in-field">
             <input id="wemail_form_opt_in" <?php echo isset( $_POST['wemail_form_opt_in'] ) ? 'checked' : '';?> type="checkbox" name="wemail_form_opt_in">
-            <label for="wemail_form_opt_in"><?php _e( $this->settings['label'] ); ?></label>
+            <label for="wemail_form_opt_in"><?php esc_html_e( $this->settings['label'] ); ?></label>
         </p>
         <?php
     }
@@ -74,7 +74,7 @@ class FormOptIn
         <p class="wemail-form-opt-in-field">
             <label>
                 <input id="wemail_form_opt_in" <?php echo isset( $_POST['wemail_form_opt_in'] ) ? 'checked' : '';?> type="checkbox" name="wemail_form_opt_in">
-                <?php _e( $this->settings['label'] ); ?>
+                <?php esc_html_e( $this->settings['label'] ); ?>
             </label>
         </p>
         <?php

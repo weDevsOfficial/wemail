@@ -254,7 +254,7 @@ final class WeMail {
      */
     public function admin_notices() {
         foreach ( $this->admin_notices as $notice ) {
-            printf( '<div class="error"><p>' . $notice . '</p></div>' );
+            printf( '<div class="error"><p>' . esc_html( $notice ) . '</p></div>' );
         }
     }
 

@@ -26,5 +26,14 @@
     "psr-4": {
       "WeDevs\\WeMail\\": "includes"
     }
+  },
+  "scripts": {
+    "phpcs": [
+      "phpcs -p -s"
+    ]
+  },
+  "require-dev": {
+    "automattic/vipwpcs": "^2.0",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0"
   }
 }
