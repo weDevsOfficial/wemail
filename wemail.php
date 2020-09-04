@@ -44,6 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class_exists( 'WeDevs\WeMail\WeMail' ) || require_once __DIR__ . '/vendor/autoload.php';
 
+use WeDevs\WeMail\Admin\Elementor\FormAction;
 use WeDevs\WeMail\WeMail;
 
 define( 'WEMAIL_FILE', __FILE__ );
@@ -95,3 +96,17 @@ function wemail_plugin_action_links( $links ) {
 }
 
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'wemail_plugin_action_links');
+
+
+add_action( 'elementor_pro/init', 'register_elementor_wemail_form_action' );
+
+function register_elementor_wemail_form_action() {
+    wp_enqueue_script('wemail-form-action', WEMAIL_ASSETS . '/js/elementor-form-action.js', ['jquery'], \wemail()->version);
+
+    $action = new FormAction();
+
+    \ElementorPro\Plugin::instance()
+        ->modules_manager
+        ->get_modules( 'forms' )
+        ->add_form_action( $action->get_name(), $action );
+}
