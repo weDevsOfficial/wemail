@@ -43,10 +43,11 @@ class Orders {
     public function statusUpdated( $payload, $source ) {
         $response = wemail()->api->ecommerce()->order_status()->put(
             [
-                'source'        => $source,
-                'order_id'      => $payload['order_id'],
-                'status'        => $payload['status'],
-                'campaign_id'   => $this->campaign_id(),
+                'source'            => $source,
+                'order_id'          => $payload['order_id'],
+                'status'            => $payload['status'],
+                'campaign_id'       => $this->campaign_id(),
+                'is_first_order'    => $this->is_first_order( $payload['order_id'] ),
             ]
         );
 
@@ -64,7 +65,6 @@ class Orders {
 
     /**
      * @param $response
-     * @param $status
      */
     protected function clear_revenue_cookie( $response ) {
         if ( is_object( $response ) ) {
@@ -78,5 +78,32 @@ class Orders {
         }
 
         return $response;
+    }
+
+
+    /**
+     * @param $order_id
+     * @return bool
+     * https://github.com/woocommerce/woocommerce/wiki/wc_get_orders-and-WC_Order_Query
+     */
+    protected function is_first_order( $order_id ) {
+        $order = wc_get_order( $order_id );
+
+        $user_id = $order->get_user_id();
+
+        $args = [
+            'limit' => 2,
+            'return' => 'ids',
+        ];
+
+        if ( $user_id ) {
+            $args['customer_id'] = $user_id;
+        } else {
+            $args['billing_email'] = $order->get_billing_email();
+        }
+
+        $orders = wc_get_orders( $args );
+
+        return $orders->total < 2;
     }
 }
